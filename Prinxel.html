@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+
+<title> PRINXEL </title>
+
+<body>
+
+
+<canvas id="myCanvas" width="800" height="500" style="border:0px solid #000000;">
+</canvas>  
+ 
+ 
+<script>
+	
+	clique = false;
+	estado = false;
+
+	//música de fundo menu em loop
+	
+	var audio1 = new Audio ();
+	audio1.src = "Audio/sonoro.mp3";
+	audio1.addEventListener('ended', function() 
+	{
+    this.currentTime = 0;
+    this.play();
+	},	false);
+	audio1.play();
+
+	// Ligando o canvas ao código javascript
+	var canvas = document.getElementById("myCanvas");
+	var context = canvas.getContext("2d");	
+    var a=1;
+    var screenG =1;
+	
+	var clickInstruction = false;
+	
+	var image5= new Image();
+    image5.src= "Images/hist.png"
+	// imagem de história do jogo
+	
+	var image6 = new Image ();
+	image6.src= "Images/sob.png"
+	//imagem de sobre o jogo
+	 
+    var image0= new Image ();
+    image0.src="Images/teste.png";
+    // imagem normal
+
+    var image1= new Image();
+    image1.src= "Images/teste3.png"
+	// primeiro botão contorno
+  
+    var image2= new Image();
+    image2.src="Images/teste2.png";
+    var mouse_state = 0;
+    // segundo botão contorno
+    
+    var image3= new Image();
+    image3.src="Images/teste1.png";
+    var mouse_state = 0;
+    // terceiro botão contorno
+	
+	var image4 = new Image ();
+	image4.src = "Images/inter.png"
+	// imagem da interrogação destacada
+	
+	var image10 = new Image ();
+	image10.src = "Images/instru.png"
+	// imagem das instruções
+	
+    var mouseX;
+    var mouseY;
+	
+    function _mouseMove(e)
+    {
+    mouseX=e.x;
+    mouseY=e.y;
+    }
+    canvas.addEventListener("mousemove", _mouseMove);
+     
+	var mouse_pressed;
+	
+	var _mouseUp = function(e)
+	{
+		mouse_pressed = false;
+	}	
+
+	var _mouseDown = function(e)
+	{
+		mouse_pressed = true;
+	}
+	
+	document.addEventListener("mousemove", _mouseMove, false);
+	document.addEventListener("mouseup",   _mouseUp,   false);
+	document.addEventListener("mousedown", _mouseDown, false);
+	
+	function draw()
+	{
+        switch (mouse_state){
+			
+			case 13:
+				context.drawImage(image10,0,0,800,500);
+				break;
+			
+			case 12:
+				context.drawImage(image4,0,0,800,500);
+				break;
+            
+			case 11:
+				context.drawImage(image6,0,0,800,500);
+				break;
+			  
+			case 10:
+				context.drawImage(image5,0,0,800,500);
+				break;
+			  
+			case 0: 
+                context.drawImage(image0,0,0,800,500);
+				break;
+				 
+            case 1 :
+                context.drawImage(image1,0,0,800,500);
+				break;
+        
+            case 2:
+                context.drawImage(image2,0,0,800,500);
+				break;
+                
+            case 3:
+                context.drawImage(image3,0,0,800,500);
+				break;
+			   
+        }
+        
+		//console.log(mouse_state);
+    }
+	
+	function update()
+	{	
+		//console.log("mouseX= " + mouseX + " :: mouseY= " + mouseY);
+		// IMPRIMI A POSIÇÃO DO X e Y DO MOUSE NO CONSOLE
+		
+		
+		
+		if (mouseY >= 244 && mouseY <= 299 && mouseX >= 248 && mouseX <= 560 && !clickInstruction)
+		
+			{ 	// primeiro botão
+				
+				mouse_state = 1;
+				
+				if (mouse_pressed == true)
+				
+				{
+					//alert ("CLICOU NO PRIMEIRO BOTAO")
+					clickInstruction = true;
+					pronto = true;
+					estado = true;
+					
+				}
+				
+			} 
+		
+		else if (mouseX >= 248 && mouseX<=560 && mouseY >= 340 && mouseY <= 397 && !clickInstruction)
+		
+		
+			{	// segundo botão
+				
+				mouse_state = 2;
+			
+				if (mouse_pressed == true)
+				
+				{
+				mouse_state = 10;
+				clickInstruction = true;
+				clique = true;
+				}
+				
+			} 
+		
+		else if (mouseX >= 248 && mouseX<=560 && mouseY >= 436 && mouseY <= 491 && !clickInstruction)
+		
+			{	// terceiro botão
+			
+				mouse_state = 3;
+				
+				if (mouse_pressed == true)
+				
+				{
+					mouse_state = 11;
+					clickInstruction = true;
+					clique = true;
+				}	
+				
+			}
+			
+			else if (mouseX >= 773 && mouseX<=800 && mouseY >= 469 && mouseY <= 500 && !clickInstruction)
+		
+			{ 	// INTERROGAÇAO
+				
+				mouse_state = 12;
+			  
+				if (mouse_pressed == true)
+				
+				{
+					mouse_state = 13;
+					clickInstruction = true;
+					clique = true;
+				}
+				
+				
+			} 
+			
+		else if (!clickInstruction)
+			
+			{
+			mouse_state = 0;
+			}
+			
+		if (mouseX >= 660 && mouseX<=800 && mouseY >= 12 && mouseY <= 36 && mouse_pressed == true && clique == true)
+				
+			{ 
+			
+			location.reload ()
+			
+			}
+			
+			
+	if (estado == true) // da play no jogo 
+			
+{
+
+	audio1.pause ();
+	var fundoo = 0;
+	var nuvens = 0;
+	var fase1 = true;
+	var canCollider = false;
+	var pontos_jogador = 0;
+	var colisao = false;
+	var troca = 0;
+	var pontos = false;
+
+	// música de fundo em loop
+	
+	var audio = new Audio ();
+	audio.src = "Audio/som.mp3";
+	audio.addEventListener('ended', function() 
+	{
+	this.currentTime = 0;
+    this.play();
+	},	false);
+	audio.play();
+
+	// Ligando o canvas ao código javascript
+	var canvas = document.getElementById("myCanvas");
+	var context = canvas.getContext("2d");	
+	
+	//gravidade
+	var grav = false;
+	
+	// teclas
+	var moveLeft = false;
+	var moveRight = false;
+	var moveUp = false;
+	var moveDown = false;
+	
+	var princesaDrawLR = true;
+	// true to left and false to right
+	
+	var catDrawLR = true;
+	
+	// criando funções para uso do teclado 
+	var _keyDown = function(e)
+	{
+		key = e.keyCode;
+		
+		switch (e.keyCode)
+		{
+			case 37: // seta esquerda
+				moveLeft = true;
+				princesaDrawLR = true;
+				break;
+
+			case 39: // seta direita
+				moveRight = true;
+				princesaDrawLR = false;
+				break;
+				
+			case 38: // seta de cima
+				moveUp = true;
+				moveDown = false;
+				princesaDrawLR = true;
+				grav = true;
+				break;
+				
+			case 40: // seta de baixo
+				moveDown = true;
+				moveUp = false;
+				princesaDrawLR = true;
+				break;
+			
+			default:
+				//console.log("keyDown: " + e.keyCode);
+				break;
+		}
+	}
+
+	var _keyUp = function(e)
+	{
+		key = "";
+		
+		switch (e.keyCode)
+		{
+			case 37:
+				moveLeft = false;
+				break;
+
+			case 39:
+				moveRight = false;
+				break;
+				
+			case 38:
+				break;
+				
+			case 40:
+				break;
+
+			
+			default:
+				//console.log("keyUp: " + e.keyCode);
+				break;	
+		}
+		
+		
+	}
+
+	// registrando as funções
+	document.addEventListener("keydown", _keyDown, true);
+	document.addEventListener("keyup",   _keyUp,   true);	
+
+	// função para escrever no canvas
+	function drawText(x,y,text)
+	{
+		context.fillStyle = "#000000";
+		context.font = "20px Arial";
+	
+	}
+
+// imagens adicionadas	
+	
+	var key = "";
+	
+	//acabou tempo
+	perdeu1 = new Image();	
+	perdeu1.src = "Images/tempo.png";
+	var w_perdeu1 = 800;
+	var h_perdeu1 = 500;
+	var x_perdeu1 = 0;
+	var y_perdeu1 = 0;
+	
+	// nuvem 2
+	dois = new Image();	
+	dois.src = "Images/2.png";
+	var dois_w = 155;
+	var dois_h = 70;
+	var dois_x = 300;
+	var dois_y = 30;
+	
+	// nuvem 1
+	um = new Image();	
+	um.src = "Images/1.png";
+	var um_w = 155;
+	var um_h = 70;
+	var um_x = 20;
+	var um_y = 30;
+	
+	
+	// nuvem 8
+	oito = new Image();	
+	oito.src = "Images/8.png";
+	var oito_w = 155;
+	var oito_h = 70;
+	var oito_x = 300;
+	var oito_y = 30;
+	
+	// nuvem 6
+	seis = new Image();	
+	seis.src = "Images/6.png";
+	var seis_w = 155;
+	var seis_h = 70;
+	var seis_x = 20;
+	var seis_y = 30;
+	
+	// nuvem 7
+	sete = new Image();	
+	sete.src = "Images/7.png";
+	var sete_w = 155;
+	var sete_h = 70;
+	var sete_x = 590;
+	var sete_y = 30;
+	
+	// nuvem 5
+	cinco = new Image();	
+	cinco.src = "Images/5.png";
+	var w40 = 155;
+	var h40 = 70;
+	var x40 = 20;
+	var y40 = 30;
+	
+	// nuvem 4
+	quatro = new Image();	
+	quatro.src = "Images/4.png";
+	var w30 = 155;
+	var h30 = 70;
+	var x30 = 300;
+	var y30 = 30;
+	
+	// nuvem 3
+	tres = new Image();	
+	tres.src = "Images/3.png";
+	var w20 = 155;
+	var h20 = 70;
+	var x20 = 590;
+	var y20 = 30;
+		
+	
+	// nuvem 9
+	nove = new Image();	
+	nove.src = "Images/9.png";
+	var w5 = 155;
+	var h5 = 70;
+	var x5 = 20;
+	var y5 = 30;
+	
+	// nuvem 10
+	dez = new Image();	
+	dez.src = "Images/10.png";
+	var w4 = 155;
+	var h4 = 70;
+	var x4 = 300;
+	var y4 = 30;
+	
+	// nuvem 15
+	quinze = new Image();	
+	quinze.src = "Images/15.png";
+	var w3 = 155;
+	var h3 = 70;
+	var x3 = 590;
+	var y3 = 30;
+	
+	// fundo 1
+	fundo = new Image();	
+	fundo.src = "Images/bg5.png";
+	var w2 = 800;
+	var h2 = 500;
+	var x2 = 0;
+	var y2 = 0;
+
+	// fundo 2
+	fundo2 = new Image();	
+	fundo2.src = "Images/fase2.png";
+	var w2 = 800;
+	var h2 = 500;
+	var x2 = 0;
+	var y2 = 0;
+	
+	// fundo 3
+	fundo3 = new Image();	
+	fundo3.src = "Images/fase3.png";
+	var fase3_w = 800;
+	var fase3_h = 500;
+	var fase3_x = 0;
+	var fase3_y = 0;
+	
+	// fundo 4
+	fundo4 = new Image();	
+	fundo4.src = "Images/fase4.png";
+	var fase4_w = 800;
+	var fase4_h = 500;
+	var fase4_x = 0;
+	var fase4_y = 0;
+	
+	// fundo 5
+	fundo5 = new Image();	
+	fundo5.src = "Images/fase5.png";
+	var fase5_w = 800;
+	var fase5_h = 500;
+	var fase5_x = 0;
+	var fase5_y = 0;
+	
+	// princesa
+	var offSetL = 90;
+	var offSetR = 80;
+	var image;
+    image = new Image();	
+	image.src = "Images/bg1.png";
+	var w = 70;
+	var h = 140;
+	var x = 730;
+	var y = 350;
+	var speed_x=8;
+	var speed_y=1;
+	var yMin = canvas.height - h/2;
+	var yMax = canvas.height - h/4;
+
+	// gato 
+	var a;
+    a = new Image();	
+	a.src = "Images/gato.png";
+	var w1 = 70;
+	var h1 = 40;
+	var x1 = 100;
+	var y1 = 400;
+	var speed_x1 = 5
+	
+	// imagem de game over de colisão gato e princesa
+	var gameOver;
+	gameOver = new Image ();
+	gameOver.src = "Images/gatin.png"
+	var w6 = 800;
+	var h6 = 500;
+	var x6 = 0;
+	var y6 = 0;
+	
+	
+	// imagem de vitória
+	var vitoria;
+	vitoria = new Image ();
+	vitoria.src = "Images/ganhou.png"
+	var vitoria_w = 800;
+	var vitoria_h = 500;
+	var vitoria_x = 0;
+	var vitoria_y = 0;
+	
+	// imagem de perdeu
+	var perdeu;
+	perdeu = new Image ();
+	perdeu.src = "Images/perdeu.png"
+	var perdeu_w = 800;
+	var perdeu_h = 500;
+	var perdeu_x = 0;
+	var perdeu_y = 0;
+
+	// função de atualização de ações
+	function gravidade()
+	{
+	
+		// subir (salto)
+		if(grav == true)
+		{
+			y -= 10;
+		}
+		
+		//altura do salto
+		if( y <= 155)
+		{
+			grav = false;
+		}
+		
+		//descer (salto)
+		if(grav == false && y + h + 115 < 600)
+		{
+			y += 20;
+		}
+		
+	}
+	function update()
+	{
+		x1 += speed_x1;
+		
+		//console.log (canCollider);
+		
+		if(y <= 350)
+		{
+			canCollider = true;
+		}
+		
+		if (x1+w1/2  >= canvas.width) 
+		{
+			speed_x1 *= -1;	
+		} 
+		
+		else if(x1 <= w1/2) 
+		{
+			//console.log("gato :: " + x1);
+			speed_x1 *= -1;	
+		}
+		catDrawLR = (speed_x1 > 0);
+		
+		
+		// descer com seta e limite para baixo
+		
+		if (moveDown && y + h + 115 < 600)
+		{
+			y += 10;
+		}
+		
+		if (moveLeft)
+		{
+			x -= speed_x;
+		}
+		
+		if (moveRight)
+		{
+			x += speed_x;
+		}		
+		
+		if(moveUp)
+		{
+			gravidade();
+		}
+		
+		
+		// colisão da princesa com a tela
+		if (x - w/2 < 0)
+		{
+			x = w/2;
+		}	
+		else if (x + w/2 > canvas.width)
+		{
+			x = canvas.width - w/2;	
+		}
+	}
+	
+	// função de desenho
+	function draw()
+	{
+		// função de limpeza de área retangular
+		context.clearRect(0, 0, canvas.width, canvas.height);
+	
+		drawText(10, 30, "x: " + x);		
+		drawText(10, 60, "key: " + key);
+		
+		if (fundoo == 0) // desenha fundo da fase 1
+		{
+			context.drawImage(fundo, x2, y2, w2, h2);
+		}
+			
+		if (fundoo == 1) // desenha fundo da fase 2
+		{
+			context.drawImage(fundo2, x2, y2, w2, h2);
+		}
+		
+		if (fundoo == 2) // desenha fundo da fase 3
+		
+		{
+			context.drawImage(fundo3, fase3_x, fase3_y, fase3_w, fase3_h);
+		}
+		
+		if (fundoo == 3) // desenha fundo da fase 4
+		
+		{
+			context.drawImage(fundo4, fase4_x, fase4_y, fase4_w, fase4_h);
+		}
+		
+		if (fundoo == 4) // desenha fundo da fase 5
+		
+		{	
+			context.drawImage(fundo5, fase5_x, fase5_y, fase5_w, fase5_h);
+		}
+		
+			if (troca == 4) // colisoes da quinta fase
+			
+		{
+			if (x20 - w20 + 210 < x + w/2 && x - w/2  < x20+w20 - 30
+			&& y20 - h20 < y + h/2    && y - h/2  < y20+h20 
+			&& fundoo == 4 && nuvens == 4)
+			{ 
+				console.log ("colisao com nuvem 3 quinta fase");
+				pontos = true;
+				
+			}
+			
+			if (um_x - um_w + 210 < x + w/2 && x - w/2  < um_x+um_w - 30
+			&& um_y - um_h < y + h/2    && y - h/2  < um_y+um_h 
+			&& fundoo == 4 && nuvens == 4)
+			{ 
+				console.log ("colisao com nuvem 1");
+				pontos_jogador += 50;
+				pontos = true;
+				
+				
+			}
+			
+			if (dois_x - dois_w + 210 < x + w/2 && x - w/2  < dois_x+dois_w - 30
+			&& dois_y - dois_h < y + h/2    && y - h/2  < dois_y+dois_h 
+			&& fundoo == 4 && nuvens == 4)
+			{ 
+				
+				console.log ("colisao com nuvem 2");
+				pontos = true;
+				
+			}
+		
+		}
+			if (troca == 3) // colisões da quarta fase (6 8 7)
+			
+		{
+			
+			// colisão com nuvem sete
+			
+		if (sete_x - sete_w + 210 < x + w/2 && x - w/2  < sete_x+sete_w - 30
+			&& sete_y - sete_h < y + h/2    && y - h/2  < sete_y+sete_h 
+			&& fundoo == 3 && nuvens == 3 )
+			{ 
+				console.log ("colisao com nuvem 7 na quarta fase");
+				pontos_jogador += 50;
+				fundoo = 4;
+				nuvens = 4;
+				troca = 4;
+			}
+			
+			// colisão com nuvem seis
+			
+		if (seis_x - seis_w + 210 < x + w/2 && x - w/2  < seis_x+seis_w - 30
+			&& seis_y - seis_h < y + h/2    && y - h/2  < seis_y+seis_h 
+			&& fundoo == 3 && nuvens == 3 )
+			{ 
+				console.log ("colisao com nuvem 6");
+				fundoo = 4;
+				nuvens = 4;
+				troca = 4;
+				
+			}
+			
+			
+			// colisão com nuvem oito
+		if (oito_x - oito_w + 210 < x + w/2 && x - w/2  < oito_x+oito_w - 30
+			&& oito_y - oito_h < y + h/2    && y - h/2  < oito_y+oito_h 
+			&& fundoo == 3 && nuvens == 3 )
+			{ 
+				console.log ("colisao com nuvem 8");
+				fundoo = 4;
+				nuvens = 4;
+				troca = 4;
+				
+			}
+			
+			
+		}
+			
+			if (troca == 2)	// colisões da terceira fase (5 10 7)
+		{
+			// colisão com nuvem sete
+			
+		if (sete_x - sete_w + 210 < x + w/2 && x - w/2  < sete_x+sete_w - 30
+			&& sete_y - sete_h < y + h/2    && y - h/2  < sete_y+sete_h 
+			&& fundoo == 2 && nuvens == 2 )
+			{ 
+				console.log ("colisao com nuvem 7");
+				fundoo = 3;
+				nuvens = 3;
+				troca = 3;
+				speed_x1 = 7;
+				
+			}
+			
+			// colisão com nuvem 5
+		if (x40 - w40 + 210 < x + w/2 && x - w/2  < x40+w40 - 30
+			&& y40 - h40 < y + h/2    && y - h/2  < y40+h40 && fundoo == 2 && nuvens == 2)
+			{	
+				console.log ("colisao com nuvem 5 dnv");
+				pontos_jogador += 50;
+				fundoo = 3;
+				nuvens = 3;
+				troca = 3;
+				speed_x1 = 7;
+				
+			}
+			
+			
+			// colisão com nuvem 10
+		 if ( x4 - w4 + 210 < x + w/2  && x - w/2 < x4+w4 - 30
+			 && y4 - h4 - 150 < y + h/2 && y - h/2  < y4+h4 && fundoo == 2 && nuvens == 2)
+			{ 
+				
+				console.log ("colisao com nuvem 10 dnv");
+				fundoo = 3;
+				nuvens = 3;
+				troca = 3;
+				speed_x1 = 7;
+				
+				
+			}
+			
+			
+		}
+			
+			if (troca == 1)  // colisões da segunda fase (5 4 3)
+		{	
+			
+			// colisão com nuvem cinco
+			
+		if (x40 - w40 + 210 < x + w/2 && x - w/2  < x40+w40 - 30
+			&& y40 - h40 < y + h/2    && y - h/2  < y40+h40 
+			&& fundoo == 1 && nuvens == 1)
+			{ 
+				
+				console.log ("colisao com nuvem 5");
+				fundoo = 2;
+				nuvens = 2;
+				troca = 2;
+			}
+			
+			// colisão com nuvem quatro
+			
+		if (x30 - w30 + 210 < x + w/2 && x - w/2  < x30+w30 - 30
+			&& y30 - h30 < y + h/2    && y - h/2  < y30+h30 
+			&& fundoo == 1 && nuvens == 1)
+			{ 
+				
+				console.log ("colisao com nuvem 4");
+				fundoo = 2;
+				nuvens = 2;
+				troca = 2;
+			}
+			
+			// colisão com nuvem tres
+			
+		if (x20 - w20 + 210 < x + w/2 && x - w/2  < x20+w20 - 30
+			&& y20 - h20 < y + h/2    && y - h/2  < y20+h20 
+			&& fundoo == 1 && nuvens == 1)
+			{ 
+				
+				console.log ("colisao com nuvem 3");
+				fundoo = 2;
+				pontos_jogador += 50;
+				nuvens = 2;
+				troca = 2;
+			}
+			
+			}
+			
+			
+			if (troca == 0) // colisões da primeira fase (9 10 15)
+		{
+			
+		// colisão com nuvem 15
+	    if  (x3 - w3 + 210 < x + w/2 && x - w/2 < x3+w3 - 30
+			 && y3 - h3 < y + h/2 && y - h/2 < y3+h3 && 
+			 fundoo == 0 && nuvens == 0 && fase1 && canCollider)
+			{ 
+				canCollider = false;
+				fundoo = 1;
+				nuvens = 1;
+				contador += 0;
+				colisao = true;
+				console.log ("colisao com nuvem 15");
+				//y+= 15;
+				grav == false;
+				fase1 == false;
+				troca = 1;
+			}
+			
+			// colisão com nuvem 10
+		 if ( x4 - w4 + 210 < x + w/2  && x - w/2 < x4+w4 - 30
+			 && y4 - h4 - 150 < y + h/2 && y - h/2  < y4+h4)
+			{ 
+				fundoo = 1;
+				nuvens = 1;
+				console.log ("colisao com nuvem 10");
+				troca = 1;
+			}
+			
+			// colisão com nuvem 9
+		if ( x5 - w5 + 210 < x + w/2 && x - w/2  < x5+w5 - 30
+			&& y5 - h5 < y + h/2     && y - h/2  < y5+h5 && canCollider)
+			{ 
+				canCollider = false;
+				pontos_jogador += 50;
+				fundoo = 1;
+				nuvens = 1;
+				fase1 = false;
+				console.log ("colisao com nuvem 9");
+				troca = 1;
+			}
+			
+		}
+			
+		
+		//fundo
+		if (catDrawLR == true) 
+		{
+			context.save();
+			context.translate(x1, y1);
+			context.drawImage(a, -w1/2, -h1/2, w1, h1); 
+			context.restore();
+		} 
+		
+		else 
+		{
+			context.save();
+			context.translate(x1, y1);
+			context.scale(-1,1);
+			context.drawImage(a, -w1/2, -h1/2, w1, h1); 
+			context.restore();
+		}
+		
+		//gato
+		if(princesaDrawLR == true) 
+		{
+			// left
+			context.save();
+			context.translate(x, y);
+			context.drawImage(image, -w/2, -h/2, w, h);
+			context.restore();
+		}
+
+		else 
+		{
+			context.save();
+			context.translate(x, y);
+			context.scale(-1,1);
+			context.drawImage(image, -w/2, -h/2, w, h);
+			context.restore();
+		}
+		
+		if (nuvens == 0) // desenha nuvens da fase 1
+		{
+			context.drawImage(quinze, x3, y3, w3, h3);	//nuvem quinze
+			context.drawImage(dez, x4, y4, w4, h4);	//nuvem dez
+			context.drawImage(nove, x5, y5, w5, h5);	//nuvem nove
+		}
+			
+		if (nuvens == 1) // desenha nuvens da fase 2
+			
+		{
+			context.drawImage(tres, x20, y20, w20, h20);
+			context.drawImage(quatro, x30, y30, w30, h30);
+			context.drawImage(cinco, x40, y40, w40, h40);				
+		}
+		
+		if (nuvens == 2) // desenha nuvens da fase 3 
+		
+		{
+			context.drawImage(dez, x4, y4, w4, h4);	
+			context.drawImage(cinco, x40, y40, w40, h40);
+			context.drawImage(sete, sete_x, sete_y, sete_w, sete_h);
+		
+		}
+		
+		if (nuvens == 3) // desenha nuvens da fase 4
+		
+		{
+			context.drawImage(sete, sete_x, sete_y, sete_w, sete_h);
+			context.drawImage(seis, seis_x, seis_y, seis_w, seis_h);
+			context.drawImage(oito, oito_x, oito_y, oito_w, oito_h);
+		
+		}
+		
+		
+		if (nuvens == 4) // desenha nuvens da fase 5
+		
+		{
+			context.drawImage(tres, x20, y20, w20, h20);
+			context.drawImage(um, um_x, um_y, um_w, um_h);
+			context.drawImage(dois, dois_x, dois_y, dois_w, dois_h);
+			
+		}
+			
+		
+		// desenha o contador
+		context.font = "20pt Arial";
+		context.fillStyle = "White";
+		context.fillText("Tempo: " +  contador, canvas.width - 790, 25);
+		
+		// colisão do gato com a princesa e abre imagem de game over
+		if ( x1 - w1/2 < x + w/2 
+			&& x - w/2 < x1+w1/2
+			&& y1 - h1/2 < y + h/2 
+			&& y - h/2 < y1+h1/2)
+		{
+		
+		context.drawImage(gameOver, x6, y6, w6, h6);	
+		speed_x1 = 0;
+		speed_x = 0;
+		speed_y = 0;
+		grav = false;
+		contador ++;
+		!gravidade ();
+		
+		}
+		
+		
+	// mudança de cor quando estiver menor que 6 segundos o contador
+		if ( contador <  10)
+
+		{
+			context.font = "20pt Arial";
+			context.fillStyle = "Red";
+			context.fillText("Tempo: " +  contador, canvas.width - 790, 25);
+		}
+		
+		// imagem de final do contador
+		
+		if ( contador == 0)
+		{
+			context.drawImage(perdeu1, x_perdeu1, y_perdeu1, w_perdeu1, h_perdeu1);
+			speed_x1 = 0;
+			speed_x = 0;
+			speed_y = 0;
+			grav = false;
+		}
+		
+		if (pontos == true)
+		
+		{
+		
+			if (pontos_jogador >= 200 && pontos_jogador <=250)
+		
+			{
+		
+			context.drawImage(vitoria, vitoria_x, vitoria_y, vitoria_w, vitoria_h);
+			speed_x1 = 0;
+			speed_x = 0;
+			speed_y = 0;
+			!gravidade
+			troca = 5;
+			
+			}
+			
+			if (pontos_jogador >=0 && pontos_jogador <=150)
+			
+			
+			{
+			
+				context.drawImage(perdeu, perdeu_x, perdeu_y, perdeu_w, perdeu_h);
+				speed_x1 = 0;
+				speed_x = 0;
+				speed_y = 0;
+				!gravidade
+				troca = 5;
+			}
+			
+			if (pontos_jogador > 250)
+			
+			{
+				context.drawImage(perdeu, perdeu_x, perdeu_y, perdeu_w, perdeu_h);
+				speed_x1 = 0;
+				speed_x = 0;
+				speed_y = 0;
+				!gravidade
+				troca = 5;
+			}
+		}
+		
+		// desenha pontos das nuvens
+		context.font = "20pt Arial";
+		context.fillStyle = "White";
+		context.fillText("Pontos: " +  pontos_jogador, canvas.width - 150, 25);
+		
+		if (pontos==true && pontos_jogador >= 200 && pontos_jogador <=250)
+		
+		{
+			context.font = "20pt Arial";
+			context.fillStyle = "Black";
+			context.fillText("Pontos: " +  pontos_jogador, canvas.width - 150, 25);
+		
+		}
+		
+	}
+	
+	
+	// function para contador 
+	contador = 30;
+	
+	function contadorT()
+	
+	{
+
+		if ( contador > 0)
+		
+		{
+			contador --;
+		}
+		
+		
+	}
+	
+	setInterval(contadorT,1000);
+	
+	// ciclo da aplicação
+	function loop()
+	{
+		update();
+		draw();
+		setTimeout(loop, 30);
+		clear.setTimeout (loop1,05)
+	}
+	
+	loop();}
+		
+		}
+		
+			
+			
+	function DrawNovoMenu ()
+			
+{
+		
+}
+		
+	// ciclo da aplicação
+	function loop1()
+	{   
+	DrawNovoMenu ();
+	switch(screenG)
+        {
+            case 1:
+                update();
+                draw();
+                break;
+            case 2:
+                drawGame();
+            
+        }
+		
+     setTimeout(loop1, 05);
+	}
+	
+	loop1();
+	
+</script>
+
+</body>
+</html>
